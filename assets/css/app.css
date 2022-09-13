@@ -1,6 +1,12 @@
 @import "tailwindcss/base";
+/* here go the plugin styles */
+/* then goes our custom styles */
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/* @import "./phoenix"; */
+
+@import "./custom";
 
 /* This file is for your main application CSS */
 
@@ -63,6 +69,7 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
+  border-radius: 0.5rem;
 }
 
 .phx-modal-content {
@@ -71,6 +78,7 @@
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  border-radius: 0.5rem;
 }
 
 .phx-modal-close {
@@ -121,4 +129,3 @@
   0% { opacity: 1; }
   100% { opacity: 0; }
 }
-

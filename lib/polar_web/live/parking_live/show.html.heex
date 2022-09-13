@@ -1,4 +1,4 @@
-<h1>Show Parking</h1>
+<h1 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Show Parking</h1>
 
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.parking_show_path(@socket, :show, @parking)}>
@@ -13,24 +13,28 @@
   </.modal>
 <% end %>
 
-<ul>
+<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+    <ul>
+      <li>
+        <strong>Name:</strong>
+        <%= @parking.name %>
+      </li>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @parking.name %>
-  </li>
+      <li>
+        <strong>Is free:</strong>
+        <%= @parking.is_free %>
+      </li>
 
-  <li>
-    <strong>Is free:</strong>
-    <%= @parking.is_free %>
-  </li>
+      <li>
+        <strong>Has charger:</strong>
+        <%= @parking.has_charger %>
+      </li>
 
-  <li>
-    <strong>Has charger:</strong>
-    <%= @parking.has_charger %>
-  </li>
+    </ul>
+  </div>
+</div>
 
-</ul>
 
 <span><%= live_patch "Edit", to: Routes.parking_show_path(@socket, :edit, @parking), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.parking_index_path(@socket, :index) %></span>
+<span><%= live_redirect "Back", to: Routes.parking_index_path(@socket, :index), class: "button" %></span>

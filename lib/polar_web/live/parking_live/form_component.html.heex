@@ -1,28 +1,37 @@
 <div>
-  <h2><%= @title %></h2>
+  <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900"><%= @title %></h2>
 
-  <.form
-    let={f}
-    for={@changeset}
-    id="parking-form"
-    phx-target={@myself}
-    phx-change="validate"
-    phx-submit="save">
-  
-    <%= label f, :name %>
-    <%= text_input f, :name %>
-    <%= error_tag f, :name %>
-  
-    <%= label f, :is_free %>
-    <%= checkbox f, :is_free %>
-    <%= error_tag f, :is_free %>
-  
-    <%= label f, :has_charger %>
-    <%= checkbox f, :has_charger %>
-    <%= error_tag f, :has_charger %>
-  
-    <div>
-      <%= submit "Save", phx_disable_with: "Saving..." %>
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+      <.form
+        let={f}
+        for={@changeset}
+        id="parking-form"
+        phx-target={@myself}
+        phx-change="validate"
+        phx-submit="save"
+        class="mb-0 space-y-6">
+      
+        <%= label f, :name %>
+        <%= text_input f, :name %>
+        <%= error_tag f, :name %>
+      
+        <div class="flex items-center">
+          <%= checkbox f, :is_free %>
+          <%= label f, :is_free, class: "ml-2 block text-gray-900" %>
+          <%= error_tag f, :is_free %>
+        </div>
+
+        <div class="flex items-center">
+          <%= checkbox f, :has_charger %>
+          <%= label f, :has_charger, class: "ml-2 block text-gray-900" %>
+          <%= error_tag f, :has_charger %>
+        </div>
+      
+        <div>
+          <%= submit "Save", phx_disable_with: "Saving...", class: "bg-green-700" %>
+        </div>
+      </.form>
     </div>
-  </.form>
+  </div>
 </div>
