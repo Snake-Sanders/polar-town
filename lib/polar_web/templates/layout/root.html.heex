@@ -9,18 +9,20 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body>
+  <body class="bg-gray-100 px-2">
     <header>
-      <section class="container">
+      <section class="pt-0 pb-4">
         <nav>
           <ul>
-            <li></li>
+            <li class="p-2 bg-blue-900 font-bold text-gray-100 rounded-md">
+            Polar <span class="text-red-500">Town</span>
+            </li>
           </ul>
         </nav>
       </section>
     </header>
     <%= @inner_content %>
-    <footer>        
+    <footer class="p-2 mt-14 bg-blue-900 text-gray-300 text-sm rounded-md">        
       <ul>
         <li><a href="https://hexdocs.pm/phoenix/overview.html">Phoenix</a></li>
       <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>

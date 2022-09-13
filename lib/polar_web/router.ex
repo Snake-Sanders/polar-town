@@ -17,7 +17,8 @@ defmodule PolarWeb.Router do
   scope "/", PolarWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", PolarLive
+    # get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
