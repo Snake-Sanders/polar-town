@@ -1,0 +1,43 @@
+<h1>Listing Parkings</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.parking_index_path(@socket, :index)}>
+    <.live_component
+      module={PolarWeb.ParkingLive.FormComponent}
+      id={@parking.id || :new}
+      title={@page_title}
+      action={@live_action}
+      parking={@parking}
+      return_to={Routes.parking_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Is free</th>
+      <th>Has charger</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="parkings">
+    <%= for parking <- @parkings do %>
+      <tr id={"parking-#{parking.id}"}>
+        <td><%= parking.name %></td>
+        <td><%= parking.is_free %></td>
+        <td><%= parking.has_charger %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.parking_show_path(@socket, :show, parking) %></span>
+          <span><%= live_patch "Edit", to: Routes.parking_index_path(@socket, :edit, parking) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: parking.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Parking", to: Routes.parking_index_path(@socket, :new) %></span>
