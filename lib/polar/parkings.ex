@@ -103,6 +103,14 @@ defmodule Polar.Parkings do
   end
 
   @doc """
+  Deletes all the Parkings in the Database
+  """
+  def delete_all_parkings() do
+    list_parkings()
+    |> Enum.each(&delete_parking/1)
+  end
+
+  @doc """
   Generates a list of random %Parking{} structures according
   to the given `amount` requested.
   """

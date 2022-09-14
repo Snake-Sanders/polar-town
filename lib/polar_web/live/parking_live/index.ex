@@ -40,6 +40,16 @@ defmodule PolarWeb.ParkingLive.Index do
     {:noreply, assign(socket, :parkings, list_parkings())}
   end
 
+  def handle_event("delete-all", _params, socket) do
+    Parkings.delete_all_parkings()
+    {:noreply, assign(socket, :parkings, list_parkings())}
+  end
+
+  def handle_event("auto-gen", _params, socket) do
+    Parkings.gen_random_parkings(6)
+    {:noreply, assign(socket, :parkings, list_parkings())}
+  end
+
   defp list_parkings do
     Parkings.list_parkings()
   end

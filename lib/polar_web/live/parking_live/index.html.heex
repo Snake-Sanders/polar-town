@@ -14,8 +14,26 @@
   </.modal>
 <% end %>
 
-<div class="flex justify-center">
-  <span><%= live_patch "New Parking", to: Routes.parking_index_path(@socket, :new), class: "button" %></span>
+<div class="flex flex-row justify-center space-x-14">
+  <div>
+    <span><%= live_patch "New Parking", to: Routes.parking_index_path(@socket, :new), class: "button" %></span>
+  </div>
+
+  <div>
+    <span><%= link "Generate", to: "#",
+              phx_click: "auto-gen", 
+              data: [confirm: "Are you sure you want to generate random parkings?"],
+              class: "button" %>
+    </span>
+  </div>
+
+  <div>
+    <span><%= link "Delete All", to: "#", 
+              phx_click: "delete-all", 
+              data: [confirm: "Are you sure you want to delete all?"],
+              class: "red-button" %>
+    </span>
+  </div>
 </div>
 
 <div class="flex justify-center">
