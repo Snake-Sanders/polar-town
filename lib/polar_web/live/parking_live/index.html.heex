@@ -31,13 +31,13 @@
         <td><%= parking.has_charger %></td>
 
         <td>
-          <span><%= live_redirect "Show", to: Routes.parking_show_path(@socket, :show, parking) %></span>
-          <span><%= live_patch "Edit", to: Routes.parking_index_path(@socket, :edit, parking) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: parking.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= live_redirect "Show", to: Routes.parking_show_path(@socket, :show, parking), class: "button" %></span>
+          <span><%= live_patch "Edit", to: Routes.parking_index_path(@socket, :edit, parking), class: "button" %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: parking.id, data: [confirm: "Are you sure?"], class: "button" %></span>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<span><%= live_patch "New Parking", to: Routes.parking_index_path(@socket, :new) %></span>
+<span><%= live_patch "New Parking", to: Routes.parking_index_path(@socket, :new), class: "button" %></span>

@@ -21,7 +21,7 @@ Tailwindcss tutorial:
     [multiple],
     textarea,
     select {
-        @apply w-full mt-4 border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
+        @apply w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
     }
 
     [type="checkbox"],
@@ -33,7 +33,28 @@ Tailwindcss tutorial:
     }
 }
 
+h1 {
+    @apply text-center text-gray-900 font-extrabold text-4xl mb-8;
+}
 
 a.button {
     @apply inline-flex items-center px-4 py-2 border border-indigo-300 text-sm shadow-sm leading-6 font-medium rounded-md text-indigo-700 bg-indigo-100 transition ease-in-out duration-150 outline-none;
 }
+
+.container {
+    @apply max-w-6xl mx-auto;
+}  
+
+h3 {
+    @apply mt-6 mb-2 text-xl font-bold text-gray-900;
+}
+
+.auth {
+    label {
+        @apply block mb-1 mt-4 text-sm font-medium text-gray-700;
+    }
+}
+
+.invalid-feedback {
+    @apply text-red-500 font-semibold 
+  }

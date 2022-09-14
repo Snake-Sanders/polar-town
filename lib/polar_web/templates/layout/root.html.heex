@@ -9,28 +9,32 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="bg-gray-200 px-2 max-w-lg mx-auto">
-    <header>
-      <section class="pt-0 pb-4">
-        <nav>
-          <ul>
-            <li class="p-2 bg-blue-900 font-bold text-gray-100 rounded-md">
-            Polar <span class="text-red-500">Town</span>
-            </li>
-          </ul>
-          <%= render "_user_menu.html", assigns %>
-        </nav>
+  <body class="antialiased relative bg-cool-gray-200 font-sans">
+    <header class="mb-8">
+      <section class="container">
+          <nav role="navigation" class="p-2 grid grid-cols-3 bg-blue-900 text-gray-100 rounded-md">
+            <div class="font-bold text-xl">
+              <a href="/">
+              <span class="shadow-lg shadow-green-600">Polar</span> <span class="italic text-violet-300 shadow-lg shadow-violet-500">Town</span>
+              </a>
+            </div>
+            <div></div>
+            <div>
+              <%= render "_user_menu.html", assigns %>
+            </div>
+          </nav>
       </section>
     </header>
     <%= @inner_content %>
-    <footer class="p-2 mt-14 bg-blue-900 text-gray-300 text-sm rounded-md">        
-      <ul>
-        <li><a href="https://hexdocs.pm/phoenix/overview.html">Phoenix</a></li>
-      <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-        <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-      <% end %>
-      </ul>
-
+    <footer>
+      <section class="container">        
+        <ul class="p-2 mt-14 bg-blue-900 text-gray-300 text-sm rounded-md">
+          <li><a href="https://hexdocs.pm/phoenix/overview.html">Phoenix</a></li>
+        <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+          <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+        <% end %>
+        </ul>
+      </section>
     </footer>
   </body>
 </html>
