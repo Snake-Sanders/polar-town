@@ -101,4 +101,28 @@ defmodule Polar.Parkings do
   def change_parking(%Parking{} = parking, attrs \\ %{}) do
     Parking.changeset(parking, attrs)
   end
+
+  @doc """
+  Generates a list of random %Parking{} structures according
+  to the given `amount` requested.
+  """
+  def gen_random_parkings(amount) when is_integer(amount) do
+    for i <- 1..amount, into: [] do
+      %Parking{
+        has_charger: Enum.random([true, false]),
+        is_free: Enum.random([true, false]),
+        name: "P-" <> pad_number(i, 2)
+      }
+      |> Repo.insert!()
+    end
+  end
+
+  defp pad_number(number, pad)
+    when is_integer(number)
+    and is_integer(pad) do
+
+    number
+    |> Integer.to_string()
+    |> String.pad_leading(pad, "0")
+  end
 end
