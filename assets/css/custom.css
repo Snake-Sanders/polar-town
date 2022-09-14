@@ -45,16 +45,17 @@ Tailwindcss tutorial:
     }
 }
 
-
-
 a.button {
     @apply inline-flex items-center px-4 py-2 border border-indigo-300 text-sm shadow-sm leading-6 font-medium rounded-md text-indigo-700 bg-indigo-100 transition ease-in-out duration-150 outline-none;
+}
+
+a.red-button {
+    @apply inline-flex items-center px-4 py-2 border border-red-600  text-sm shadow-sm leading-6 font-medium rounded-md text-red-900 bg-red-300 transition ease-in-out duration-150 outline-none;
 }
 
 .container {
     @apply max-w-6xl mx-auto;
 }  
-
 
 .auth {
     label {
