@@ -1,3 +1,4 @@
+<div class="flex flex-col space-y-4">
 <h1>Listing Parkings</h1>
 
 <%= if @live_action in [:new, :edit] do %>
@@ -13,31 +14,37 @@
   </.modal>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Is free</th>
-      <th>Has charger</th>
+<div class="flex justify-center">
+  <span><%= live_patch "New Parking", to: Routes.parking_index_path(@socket, :new), class: "button" %></span>
+</div>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="parkings">
-    <%= for parking <- @parkings do %>
-      <tr id={"parking-#{parking.id}"}>
-        <td><%= parking.name %></td>
-        <td><%= parking.is_free %></td>
-        <td><%= parking.has_charger %></td>
+<div class="flex justify-center">
+  <table>
+    <thead>
+      <tr >
+        <th>Name</th>
+        <th>Is free</th>
+        <th>Has charger</th>
 
-        <td>
-          <span><%= live_redirect "Show", to: Routes.parking_show_path(@socket, :show, parking), class: "button" %></span>
-          <span><%= live_patch "Edit", to: Routes.parking_index_path(@socket, :edit, parking), class: "button" %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: parking.id, data: [confirm: "Are you sure?"], class: "button" %></span>
-        </td>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody id="parkings">
+      <%= for parking <- @parkings do %>
+        <tr id={"parking-#{parking.id}"}>
+          <td><%= parking.name %></td>
+          <td><%= parking.is_free %></td>
+          <td><%= parking.has_charger %></td>
 
-<span><%= live_patch "New Parking", to: Routes.parking_index_path(@socket, :new), class: "button" %></span>
+          <td>
+            <span><%= live_redirect "Show", to: Routes.parking_show_path(@socket, :show, parking), class: "button" %></span>
+            <span><%= live_patch "Edit", to: Routes.parking_index_path(@socket, :edit, parking), class: "button" %></span>
+            <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: parking.id, data: [confirm: "Are you sure?"], class: "button" %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+</div>
