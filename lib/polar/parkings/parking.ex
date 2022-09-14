@@ -4,7 +4,7 @@ defmodule Polar.Parkings.Parking do
 
   schema "parkings" do
     field :has_charger, :boolean, default: false
-    field :is_free, :boolean, default: false
+    field :is_free, :boolean, default: true
     field :name, :string
 
     timestamps()
@@ -14,6 +14,6 @@ defmodule Polar.Parkings.Parking do
   def changeset(parking, attrs) do
     parking
     |> cast(attrs, [:name, :is_free, :has_charger])
-    |> validate_required([:name, :is_free, :has_charger])
+    |> validate_required([:name])
   end
 end
