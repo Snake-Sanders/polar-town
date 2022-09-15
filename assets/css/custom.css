@@ -53,16 +53,16 @@ a.red-button {
     @apply inline-flex items-center px-4 py-2 border border-red-600  text-sm shadow-sm leading-6 font-medium rounded-md text-red-900 bg-red-300 transition ease-in-out duration-150 outline-none;
 }
 
+/* TODO: container is already defined by tailwind, change it */
 .container {
     @apply max-w-6xl mx-auto;
 }  
 
 .auth {
-    label {
-        @apply block mb-1 mt-4 text-sm font-medium text-gray-700;
-    }
+    @apply container bg-white max-w-xs md:max-w-md border border-gray-200 rounded-lg p-8;
+    
 }
 
 .invalid-feedback {
     @apply text-red-500 font-semibold 
-  }
+}
