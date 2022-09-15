@@ -10,31 +10,69 @@ defmodule PolarWeb.PolarLive do
     {:ok, socket}
   end
 
+  def handle_params(%{"id" => parking_id}, _url, socket) do
+    parking = Parkings.get_parking!(parking_id)
+    socket = assign(socket, selected_item: parking)
+    {:noreply, socket}
+  end
+
+  def handle_params(_, _url, socket) do
+    socket = assign(socket, selected_item: nil)
+    {:noreply, socket}
+  end
+
   def render(assigns) do
     ~H"""
     <h1 class="text-center">Polar Services</h1>
-    <!-- <div class="flex flex-row items-stretch"> -->
+
     <div class="flex justify-around mt-6">
-      <!-- "p-3 bg-indigo-500 hover:bg-indigo-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 shadow-lg shadow-indigo-800/50 font-semibold text-gray-200 rounded-lg" -->
       <div>
-      <%= live_redirect("Admin Parkings", to: "/parkings", class: "button") %>
+        <%= live_redirect("Admin Parkings", to: "/parkings", class: "button") %>
       </div>
     </div>
 
     <div>
       <h3>Parkings</h3>
-      <div class="grid grid-cols-4 gap-8">
-      <%= for p <- @parkings do %>
-        <div class="flex flex-row justify-around">
-          <div class="relative flex flow-col justify-start space-x-2 p-3 bg-blue-100 rounded-r-lg border-l-4 border-l-blue-300 shadow-md">
-            <div class="text-gl font-semibold pr-8"><%= p.name %> </div>
-            <div class="absolute top-1 right-1">
-              <%= get_icons(p) %>
-            </div>
-          </div>
+      <div class="flex justify-around">
+      <%= for parking <- @parkings do %>
+        <div  id={"parking-#{parking.id}"}>
+          <%= live_patch button_link_body(parking,
+                if(is_nil(@selected_item), do: 0, else: @selected_item.id)),
+              to: Routes.live_path(@socket, __MODULE__, id: parking.id),
+              replave: true %>
         </div>
       <% end %>
       </div>
+    </div>
+    """
+  end
+
+  # this is the parking button styled content
+  defp button_link_body(parking, selected_id) do
+    default_attr = " hover:bg-blue-300
+                    active:bg-blue-400
+                    focus:outline-none
+                    focus:ring
+                    focus:ring-blue-300
+                    border
+                    rounded-t-lg
+                    p-3"
+
+    btn_attr =
+      case parking.id do
+        ^selected_id -> "active border-2 border-indigo-400 bg-blue-200 shadow-xl"
+        _ -> "border-blue-300 bg-blue-100 shadow-md"
+      end
+
+    assigns = %{
+      parking: parking,
+      btn_attr: btn_attr  <> default_attr
+    }
+    # #{@active} hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 relative flex flow-col justify-start space-x-2 p-3 bg-blue-100 rounded-r-lg border-l-4 border-l-blue-300 shadow-md"
+    ~H"""
+    <div class={@btn_attr}>
+      <div class="float-left"><%= get_icons(@parking) %></div>
+      <div class="text-gl font-semibold"><%= @parking.name %> </div>
     </div>
     """
   end
@@ -60,12 +98,8 @@ defmodule PolarWeb.PolarLive do
     }
 
     ~H"""
-    <div>
-      <Heroicons.LiveView.icon name={@free_icon} type="outline" class={"h-5 w-5 #{@free_color}"} />
-    </div>
-    <div>
+      <Heroicons.LiveView.icon name={@free_icon} type="outline" class={"float-left h-5 w-5 #{@free_color}"} />
       <Heroicons.LiveView.icon name={@charger_icon} type="outline" class={"h-5 w-5 #{@charger_color}"} />
-    </div>
     """
   end
 end
