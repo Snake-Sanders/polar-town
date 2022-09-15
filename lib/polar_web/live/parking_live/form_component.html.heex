@@ -12,10 +12,12 @@
         phx-submit="save"
         class="mb-0 space-y-6">
       
-        <%= label f, :name %>
-        <%= text_input f, :name %>
-        <%= error_tag f, :name %>
-      
+        <div>
+          <%= label f, :name %>
+          <%= text_input f, :name %>
+          <%= error_tag f, :name %>
+        </div>
+
         <div class="flex items-center">
           <%= checkbox f, :is_free %>
           <%= label f, :is_free, class: "ml-2 block text-gray-900" %>
@@ -26,6 +28,18 @@
           <%= checkbox f, :has_charger %>
           <%= label f, :has_charger, class: "ml-2 block text-gray-900" %>
           <%= error_tag f, :has_charger %>
+        </div>
+
+        <div>
+          <%= label f, :lat, "Latitude" %>
+          <%= number_input f, :lat %>
+          <%= error_tag f, :lat %>
+        </div>
+
+        <div>
+          <%= label f, :lng, "Longitude" %>
+          <%= number_input f, :lng %>
+          <%= error_tag f, :lng %>
         </div>
       
         <div>
