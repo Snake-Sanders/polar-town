@@ -58,7 +58,7 @@ a.red-button {
     @apply max-w-6xl mx-auto;
 }  
 
-.auth {
+.form-wrapper {
     @apply container bg-white max-w-xs md:max-w-md border border-gray-200 rounded-lg p-8;
     
 }
