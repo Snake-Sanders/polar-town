@@ -10,11 +10,29 @@ Hooks.PhxHookGeoAssetMap = {
         console.log("GeoAssetMap mounted");
 
         this.map = new GeoAssetMap(
-            this.el, [68.2326783,14.5468427], event => {
-                const geoassetId = event.target.options.geoassetId;
-                this.pushEvent("marker-clicked", geoassetId, (reply, ref ) => {
-                    this.scrollTo(reply.geoasset.id);
-                });
+            this.el, [68.2326783, 14.5468427],
+            (event, action) => {
+                switch (action) {
+                    case "selected-marker": {
+                        console.log("selected-marker:" + event.latlng)
+                        const geoassetId = event.target.options.geoassetId;
+                        this.pushEvent("marker-clicked", geoassetId);
+                        break;
+                    }
+                    case "right-click": {
+                        console.log("dropped-new-marker:" + event.latlng)
+                        this.pushEvent("dropped-new-marker", event.latlng, (reply, ref) => {
+                            if(reply.geoasset == null){
+                                // failed to store this new marker on the DB
+                                remove(event);
+                            }
+                            else{
+                                this.map.addMarker(reply.geoasset);
+                            }
+                        })
+                        break;
+                    }
+                }
             }
         )
 

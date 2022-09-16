@@ -2,6 +2,7 @@ defmodule PolarWeb.PolarLive do
   use PolarWeb, :live_view
 
   alias Polar.Parkings
+  alias Polar.Parkings.Parking
 
   def mount(_param, _session, socket) do
     socket =
@@ -34,6 +35,28 @@ defmodule PolarWeb.PolarLive do
     # the client requests the list of markers from the server
 
     {:reply, %{geoassets: socket.assigns.parkings}, socket}
+  end
+
+  def handle_event("dropped-new-marker", %{"lat" => lat, "lng" => lng}, socket) do
+    # 1. A new pin was just dropped
+    # 2. with the coordinates create a new entry in DB
+    # 3. send back the id so it can be linked
+
+    parking = %{name: "new", lat: lat, lng: lng}
+
+    case Parkings.create_parking(parking) do
+      {:ok, %Parking{} = new_parking} ->
+        socket =
+          assign(socket,
+            selected_item: new_parking,
+            parkings: [new_parking | socket.assigns.parkings]
+          )
+
+        {:reply, %{geoasset: new_parking}, socket}
+
+      {:error, %Ecto.Changeset{}} ->
+        {:reply, %{geoasset: nil}, socket}
+    end
   end
 
   def handle_event("marker-clicked", parking_id, socket) do

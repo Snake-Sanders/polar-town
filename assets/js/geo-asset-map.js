@@ -3,7 +3,7 @@ import L from "../vendor/leaflet";
 class GeoAssetMap {
 
   // Initializes the Map, view, zoom, title, copyright, etc
-  constructor(element, center, markerClickedCallback) {
+  constructor(element, center, mapEventCallback) {
     this.map = L.map(element);
     this.map.setView(center, 13);
 
@@ -16,7 +16,11 @@ class GeoAssetMap {
       }
     ).addTo(this.map);
 
-    this.markerClickedCallback = markerClickedCallback;
+    this.mapEventCallback = mapEventCallback;
+    this.map.on('contextmenu', e => {
+      console.log("pressed right click")
+      this.mapEventCallback(e, "right-click")
+    });
   }
 
   // Adds a Marked on the map for a given GeoAsset
@@ -37,15 +41,16 @@ class GeoAssetMap {
         .bindPopup(geoasset.name)
 
     marker.on("click", e => {
+      console.log("pressed click")
       marker.openPopup();
-      this.markerClickedCallback(e);
+      this.mapEventCallback(e, "selected-marker");
     });
 
     return marker;
   }
 
-  // callback for highlighting a Marker on the map
-  // when the item is selected on from the list on the web.
+  // Finds and highlights a Marker on the map
+  // when the item is selected somewhere else outside the map.
   highlightMarker(geoasset) {
     const marker = this.getMarkerForGeoAsset(geoasset);
 
