@@ -76,15 +76,22 @@ defmodule PolarWeb.PolarLive do
         <%= live_redirect("Admin Parkings", to: "/parkings", class: "button") %>
       </div>
     </div>
-    <.live_component module={PolarWeb.ParkingsComponent}
-                    id="parking-list"
-                    parkings={@parkings}
-                    selected_item={@selected_item}/>
 
-    <div id="map-wrapper" phx-update="ignore" class="pt-16">
-      <div id="map"
-        phx-hook="PhxHookGeoAssetMap">
+    <div class="flex pt-16">
+
+      <div id="map-wrapper" phx-update="ignore" class="grow h-380">
+        <div id="map"
+          phx-hook="PhxHookGeoAssetMap">
+        </div>
       </div>
+
+      <div class="flex-none w-52 ml-4 justify-start ">
+      <.live_component module={PolarWeb.ParkingsComponent}
+      id="parking-list"
+      parkings={@parkings}
+      selected_item={@selected_item}/>
+      </div>
+
     </div>
     """
   end
