@@ -5,8 +5,8 @@ defmodule Polar.Parkings do
 
   import Ecto.Query, warn: false
   alias Polar.Repo
-
   alias Polar.Parkings.Parking
+  alias Polar.Geo
 
   @doc """
   Returns the list of parkings.
@@ -116,10 +116,14 @@ defmodule Polar.Parkings do
   """
   def gen_random_parkings(amount) when is_integer(amount) do
     for i <- 1..amount, into: [] do
+      {lat, lng} = Geo.randomDenverLatLng()
+
       %Parking{
         has_charger: Enum.random([true, false]),
         is_free: Enum.random([true, false]),
-        name: "P-" <> pad_number(i, 2)
+        name: "P-" <> pad_number(i, 2),
+        lat: lat,
+        lng: lng,
       }
       |> Repo.insert!()
     end

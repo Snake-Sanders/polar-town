@@ -5,67 +5,91 @@ defmodule PolarWeb.PolarLive do
   alias Polar.Parkings.Parking
 
   def mount(_param, _session, socket) do
-    socket = assign(socket, parkings: Parkings.list_parkings())
+    socket =
+      assign(socket,
+        parkings: Parkings.list_parkings(),
+        selected_item: nil
+      )
 
     {:ok, socket}
+  end
+
+  def handle_event("parking-was-selected", %{"id" => parking_id}, socket) do
+    # 1. update selected item within the socket
+    # 2. re-render the view
+    # 3. update the url with selected id
+    # 4. update the map with selected marker
+
+    parking = find_parking(socket, String.to_integer(parking_id))
+
+    socket =
+      socket
+      |> assign(selected_item: parking)
+      |> push_event("highlight-marker", parking)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("get-geoassets", _params, socket) do
+    # triggered when the client first connect over the websocket
+    # the client requests the list of markers from the server
+
+    {:reply, %{geoassets: socket.assigns.parkings}, socket}
+  end
+
+  def handle_event("dropped-new-marker", %{"lat" => lat, "lng" => lng}, socket) do
+    # 1. A new pin was just dropped
+    # 2. with the coordinates create a new entry in DB
+    # 3. send back the id so it can be linked
+
+    parking = %{name: "new", lat: lat, lng: lng}
+
+    case Parkings.create_parking(parking) do
+      {:ok, %Parking{} = new_parking} ->
+        socket =
+          assign(socket,
+            selected_item: new_parking,
+            parkings: [new_parking | socket.assigns.parkings]
+          )
+
+        {:reply, %{geoasset: new_parking}, socket}
+
+      {:error, %Ecto.Changeset{}} ->
+        {:reply, %{geoasset: nil}, socket}
+    end
+  end
+
+  def handle_event("marker-clicked", parking_id, socket) do
+    # triggered when a pin is selected on the map
+
+    selected_item = find_parking(socket, parking_id)
+    socket = assign(socket, selected_item: selected_item)
+    {:noreply, socket}
   end
 
   def render(assigns) do
     ~H"""
     <h1 class="text-center">Polar Services</h1>
-    <!-- <div class="flex flex-row items-stretch"> -->
+
     <div class="flex justify-around mt-6">
-      <!-- "p-3 bg-indigo-500 hover:bg-indigo-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 shadow-lg shadow-indigo-800/50 font-semibold text-gray-200 rounded-lg" -->
       <div>
-      <%= live_redirect("Admin Parkings", to: "/parkings", class: "button") %>
+        <%= live_redirect("Admin Parkings", to: "/parkings", class: "button") %>
       </div>
     </div>
+    <.live_component module={PolarWeb.ParkingsComponent}
+                    id="parking-list"
+                    parkings={@parkings}
+                    selected_item={@selected_item}/>
 
-    <div>
-      <h3>Parkings</h3>
-      <div class="grid grid-cols-4 gap-8">
-      <%= for p <- @parkings do %>
-        <div class="flex flex-row justify-around">
-          <div class="relative flex flow-col justify-start space-x-2 p-3 bg-blue-100 rounded-r-lg border-l-4 border-l-blue-300 shadow-md">
-            <div class="text-gl font-semibold pr-8"><%= p.name %> </div>
-            <div class="absolute top-1 right-1">
-              <%= get_icons(p) %>
-            </div>
-          </div>
-        </div>
-      <% end %>
+    <div id="map-wrapper" phx-update="ignore" class="pt-16">
+      <div id="map"
+        phx-hook="PhxHookGeoAssetMap">
       </div>
     </div>
     """
   end
 
-  defp get_icons(%Parking{is_free: is_free, has_charger: has_charger}) do
-    {free_icon, free_color} =
-      case is_free do
-        true -> {"check-circle", "text-green-600 bg-green-200 rounded-full"}
-        false -> {"x-circle", "text-red-700 bg-red-300 rounded-full"}
-      end
-
-    {charger_icon, charger_color} =
-      case has_charger do
-        true -> {"bolt", "text-gray-600 "}
-        false -> {"bolt-slash", "text-gray-400"}
-      end
-
-    assigns = %{
-      free_icon: free_icon,
-      free_color: free_color,
-      charger_icon: charger_icon,
-      charger_color: charger_color
-    }
-
-    ~H"""
-    <div>
-      <Heroicons.LiveView.icon name={@free_icon} type="outline" class={"h-5 w-5 #{@free_color}"} />
-    </div>
-    <div>
-      <Heroicons.LiveView.icon name={@charger_icon} type="outline" class={"h-5 w-5 #{@charger_color}"} />
-    </div>
-    """
+  defp find_parking(socket, parking_id) do
+    Enum.find(socket.assigns.parkings, fn p -> p.id == parking_id end)
   end
 end

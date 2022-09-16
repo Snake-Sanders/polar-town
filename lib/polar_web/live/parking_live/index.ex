@@ -46,7 +46,7 @@ defmodule PolarWeb.ParkingLive.Index do
   end
 
   def handle_event("auto-gen", _params, socket) do
-    Parkings.gen_random_parkings(6)
+    Parkings.gen_random_parkings(1)
     {:noreply, assign(socket, :parkings, list_parkings())}
   end
 
