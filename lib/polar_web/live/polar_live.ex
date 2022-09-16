@@ -74,22 +74,6 @@ defmodule PolarWeb.PolarLive do
       <%= live_redirect("Admin Parkings", to: "/parkings", class: "button") %>
     </div>
 
-    <div class="mt-6 w-full border border-gray-300 rounded-xl p-2 bg-white">
-      <%= if is_nil(@selected_item) do %>
-        <p>Select a Parking from the list</p>
-      <% else %>
-        <div class="flex flex-row space-x-8 p-4 items-center justify-center ">
-          <div class="">
-            <%= display_parking_info(@selected_item)%>
-          </div>
-
-          <div class="">
-            <%= live_redirect("Reserve now!", to: "/parkings", class: "button") %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
     <div class="flex pt-8">
 
       <div id="map-wrapper" phx-update="ignore" class="grow h-380">
@@ -105,6 +89,22 @@ defmodule PolarWeb.PolarLive do
       selected_item={@selected_item}/>
       </div>
 
+    </div>
+
+    <div class="mt-6 w-full border border-gray-300 rounded-xl p-2 bg-white">
+      <%= if is_nil(@selected_item) do %>
+        <p>Select a Parking from the list</p>
+      <% else %>
+        <div class="flex flex-row space-x-8 p-4 items-center justify-center ">
+          <div class="">
+            <%= display_parking_info(@selected_item)%>
+          </div>
+
+          <div class="">
+            <%= live_redirect("Reserve now!", to: "/parkings", class: "button") %>
+          </div>
+        </div>
+      <% end %>
     </div>
     """
   end
