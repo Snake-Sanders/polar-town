@@ -2,6 +2,8 @@ defmodule Polar.Parkings.Parking do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:id, :name, :lat, :lng]}
+
   schema "parkings" do
     field :has_charger, :boolean, default: false
     field :is_free, :boolean, default: true
