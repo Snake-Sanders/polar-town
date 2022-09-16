@@ -30,6 +30,7 @@ defmodule PolarWeb.ParkingsComponent do
                     focus:ring-blue-300
                     border
                     rounded-t-lg
+                    cursor-pointer
                     p-3"
 
     btn_attr =
