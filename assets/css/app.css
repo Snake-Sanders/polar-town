@@ -6,5 +6,6 @@
 @import "./custom";
 @import "./phoenix.css";
 @import "./live_view.css";
+@import "./leaflet";
 
 @import "tailwindcss/utilities";

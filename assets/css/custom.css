@@ -66,3 +66,7 @@ a.red-button {
 .invalid-feedback {
     @apply text-red-500 font-semibold 
 }
+
+#map {
+    height: 380px;
+}
