@@ -21,13 +21,6 @@ defmodule PolarWeb.Router do
     pipe_through :browser
 
     live "/", PolarLive
-
-    live "/parkings", ParkingLive.Index, :index
-    live "/parkings/new", ParkingLive.Index, :new
-    live "/parkings/:id/edit", ParkingLive.Index, :edit
-
-    live "/parkings/:id", ParkingLive.Show, :show
-    live "/parkings/:id/show/edit", ParkingLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
@@ -81,6 +74,13 @@ defmodule PolarWeb.Router do
 
   scope "/", PolarWeb do
     pipe_through [:browser, :require_authenticated_user]
+
+    live "/parkings", ParkingLive.Index, :index
+    live "/parkings/new", ParkingLive.Index, :new
+    live "/parkings/:id/edit", ParkingLive.Index, :edit
+
+    live "/parkings/:id", ParkingLive.Show, :show
+    live "/parkings/:id/show/edit", ParkingLive.Show, :edit
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
