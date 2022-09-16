@@ -4,12 +4,13 @@ class GeoAssetMap {
 
   // Initializes the Map, view, zoom, title, copyright, etc
   constructor(element, center, markerClickedCallback) {
-    this.map = L.map(element).setView(center, 13);
+    this.map = L.map(element);
+    this.map.setView(center, 13);
 
     L.tileLayer(
       'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
       {
-        maxZoom: 18,
+        maxZoom: 19,
         attribution:
           '©<a href="https://www.openstreetmap.org/copyright/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
       }
@@ -24,10 +25,12 @@ class GeoAssetMap {
       geoassetId: geoasset.id,
       icon: L.icon({
         iconUrl: 'images/map/marker-icon.png',
-        shadowUrl: 'images/map/marker-shadow.png'
+        shadowUrl: 'images/map/marker-shadow.png',
+        iconSize: [24, 36],
+        iconAnchor: [12, 36],
       })
     }
-    
+
     const marker =
       L.marker([geoasset.lat, geoasset.lng], marker_options)
         .addTo(this.map)
