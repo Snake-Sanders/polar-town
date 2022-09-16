@@ -9,11 +9,11 @@ defmodule PolarWeb.ParkingsComponent do
       <h3>Parkings</h3>
       <div class="flex justify-around">
         <%= for parking <- @parkings do %>
-          <div  id={"parking-#{parking.id}"}>
-            <%= live_patch button_link_body(parking,
-                  if(is_nil(@selected_item), do: 0, else: @selected_item.id)),
-                to: Routes.live_path(@socket, PolarWeb.PolarLive, id: parking.id),
-                replave: true %>
+          <div  id={"parking-#{parking.id}"}
+                phx-click="parking-was-selected"
+                phx-value-id={parking.id}>
+            <%= button_link_body(parking,
+                if(is_nil(@selected_item), do: 0, else: @selected_item.id)) %>
           </div>
         <% end %>
       </div>
