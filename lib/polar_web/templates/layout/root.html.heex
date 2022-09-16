@@ -12,10 +12,11 @@
   <body class="antialiased relative bg-gray-200 font-sans">
     <header class="mb-8">
       <section class="container">
-          <nav role="navigation" class="p-2 grid grid-cols-3 bg-blue-900 text-gray-100 rounded-md">
+          <nav role="navigation" class="p-2 grid grid-cols-3 bg-blue-900 text-gray-100 rounded-b-md">
+            <!-- <img src={Routes.static_url(@conn, "/images/bear-icon.png")} alt="Polar Town Logo"/> -->
             <div class="font-bold text-xl">
               <a href="/">
-              <span class="shadow-lg shadow-green-600">Polar</span> <span class="italic text-violet-300 shadow-lg shadow-violet-500">Town</span>
+              <span class="shadow-lg shadow-green-600">Polar</span> <span class="italic text-violet-300 shadow-t-lg shadow-violet-500">Town</span>
               </a>
             </div>
             <div></div>
@@ -28,11 +29,12 @@
     <%= @inner_content %>
     <footer>
       <section class="container">        
-        <ul class="p-2 mt-14 bg-blue-900 text-gray-300 text-sm rounded-md">
+        <ul class="p-2 mt-14 bg-blue-900 text-gray-300 text-sm rounded-t-md">
           <li><a href="https://hexdocs.pm/phoenix/overview.html">Phoenix</a></li>
         <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
           <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
         <% end %>
+        <li><a target="_blank" href="https://icons8.com/icon/lvT9AMPhMVER/bear">Bear</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
         </ul>
       </section>
     </footer>
