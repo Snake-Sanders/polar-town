@@ -74,61 +74,33 @@ defmodule PolarWeb.PolarLive do
       <%= live_redirect("Admin Parkings", to: "/parkings", class: "button") %>
     </div>
 
-    <div class="flex pt-8">
+    <div class="flex pt-4">
 
-      <div id="map-wrapper" phx-update="ignore" class="grow h-380">
-        <div id="map"
-          phx-hook="PhxHookGeoAssetMap">
+      <div class="grow">
+        <div id="map-wrapper" phx-update="ignore" class="grow h-380 drop-shadow-xl">
+          <div id="map"
+            phx-hook="PhxHookGeoAssetMap" class="rounded-lg">
+          </div>
         </div>
+
+        <.live_component module={PolarWeb.ParkingDisplayComponent}
+          id="parking-display"
+          selected_item={@selected_item} />
       </div>
 
       <div class="flex-none w-52 ml-4 justify-start ">
-      <.live_component module={PolarWeb.ParkingsComponent}
-      id="parking-list"
-      parkings={@parkings}
-      selected_item={@selected_item}/>
+        <.live_component module={PolarWeb.ParkingsComponent}
+        id="parking-list"
+        parkings={@parkings}
+        selected_item={@selected_item}/>
       </div>
 
     </div>
 
-    <div class="mt-6 w-full border border-gray-300 rounded-xl p-2 bg-white">
-      <%= if is_nil(@selected_item) do %>
-        <p>Select a Parking from the list</p>
-      <% else %>
-        <div class="flex flex-row space-x-8 p-4 items-center justify-center ">
-          <div class="">
-            <%= display_parking_info(@selected_item)%>
-          </div>
-
-          <div class="">
-            <%= live_redirect("Reserve now!", to: "/parkings", class: "button") %>
-          </div>
-        </div>
-      <% end %>
-    </div>
     """
   end
 
   defp find_parking(socket, parking_id) do
     Enum.find(socket.assigns.parkings, fn p -> p.id == parking_id end)
-  end
-
-  defp display_parking_info(parking) do
-    assigns = %{parking: parking}
-
-    ~H"""
-    <ul>
-      <li><h3 class="mt-0">Parking description</h3></li>
-      <li><p class="font-semibold">
-        Location: <span class="font-normal"><%= @parking.name %></span>
-        </p></li>
-      <li><p class="font-semibold">
-        Electric charger: <span class="font-normal"><%= if @parking.has_charger, do: "Yes", else: "No" %></span>
-        </p></li>
-      <li><p class="font-semibold">
-        Status: <span class="font-normal"><%= if @parking.is_free, do: "Available now", else: "Not available" %></span>
-        </p></li>
-    </ul>
-    """
   end
 end
