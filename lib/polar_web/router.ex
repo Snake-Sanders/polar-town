@@ -82,6 +82,13 @@ defmodule PolarWeb.Router do
     live "/parkings/:id", ParkingLive.Show, :show
     live "/parkings/:id/show/edit", ParkingLive.Show, :edit
 
+    live "/parking_reservations", ParkingReservationLive.Index, :index
+    live "/parking_reservations/new", ParkingReservationLive.Index, :new
+    live "/parking_reservations/:id/edit", ParkingReservationLive.Index, :edit
+
+    live "/parking_reservations/:id", ParkingReservationLive.Show, :show
+    live "/parking_reservations/:id/show/edit", ParkingReservationLive.Show, :edit
+
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email

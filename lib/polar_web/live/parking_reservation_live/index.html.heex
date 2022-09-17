@@ -1,0 +1,41 @@
+<h1>Listing Parking reservations</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.parking_reservation_index_path(@socket, :index)}>
+    <.live_component
+      module={PolarWeb.ParkingReservationLive.FormComponent}
+      id={@parking_reservation.id || :new}
+      title={@page_title}
+      action={@live_action}
+      parking_reservation={@parking_reservation}
+      return_to={Routes.parking_reservation_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time start</th>
+      <th>Time end</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="parking_reservations">
+    <%= for parking_reservation <- @parking_reservations do %>
+      <tr id={"parking_reservation-#{parking_reservation.id}"}>
+        <td><%= parking_reservation.time_start %></td>
+        <td><%= parking_reservation.time_end %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.parking_reservation_show_path(@socket, :show, parking_reservation) %></span>
+          <span><%= live_patch "Edit", to: Routes.parking_reservation_index_path(@socket, :edit, parking_reservation) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: parking_reservation.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Parking reservation", to: Routes.parking_reservation_index_path(@socket, :new) %></span>
