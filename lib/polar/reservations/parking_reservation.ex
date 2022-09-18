@@ -15,7 +15,9 @@ defmodule Polar.Reservations.ParkingReservation do
   @doc false
   def changeset(parking_reservation, attrs) do
     parking_reservation
-    |> cast(attrs, [:time_start, :time_end])
-    |> validate_required([:time_start, :time_end])
+    |> cast(attrs, [:time_start, :time_end, :parking_id, :user_id])
+    |> validate_required([:time_start, :time_end, :parking_id, :user_id])
+    |> assoc_constraint(:user)
+    |> assoc_constraint(:parking)
   end
 end
