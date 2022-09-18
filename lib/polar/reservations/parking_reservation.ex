@@ -5,8 +5,9 @@ defmodule Polar.Reservations.ParkingReservation do
   schema "parking_reservations" do
     field :time_end, :naive_datetime
     field :time_start, :naive_datetime
-    field :parking_id, :id
-    field :user_id, :id
+
+    belongs_to :parking, Polar.Parkings.Parking
+    belongs_to :user, Polar.Accounts.User
 
     timestamps()
   end
