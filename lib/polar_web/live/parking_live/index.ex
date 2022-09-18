@@ -1,5 +1,6 @@
 defmodule PolarWeb.ParkingLive.Index do
   use PolarWeb, :live_view
+  on_mount PolarWeb.UserLiveAuth
 
   alias Polar.Parkings
   alias Polar.Parkings.Parking

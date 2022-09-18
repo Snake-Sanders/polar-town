@@ -1,0 +1,31 @@
+<h1>Show Parking reservation</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.parking_reservation_show_path(@socket, :show, @parking_reservation)}>
+    <.live_component
+      module={PolarWeb.ParkingReservationLive.FormComponent}
+      id={@parking_reservation.id}
+      title={@page_title}
+      action={@live_action}
+      parking_reservation={@parking_reservation}
+      return_to={Routes.parking_reservation_show_path(@socket, :show, @parking_reservation)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Time start:</strong>
+    <%= @parking_reservation.time_start %>
+  </li>
+
+  <li>
+    <strong>Time end:</strong>
+    <%= @parking_reservation.time_end %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.parking_reservation_show_path(@socket, :edit, @parking_reservation), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.parking_reservation_index_path(@socket, :index) %></span>

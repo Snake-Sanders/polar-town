@@ -70,22 +70,33 @@ defmodule PolarWeb.PolarLive do
   def render(assigns) do
     ~H"""
     <h1 class="text-center">Polar Services</h1>
-
-    <div class="flex justify-around mt-6">
-      <div>
-        <%= live_redirect("Admin Parkings", to: "/parkings", class: "button") %>
-      </div>
+    <div class="flex justify-end">
+      <%= live_redirect("Admin Parkings", to: "/parkings", class: "button") %>
     </div>
-    <.live_component module={PolarWeb.ParkingsComponent}
-                    id="parking-list"
-                    parkings={@parkings}
-                    selected_item={@selected_item}/>
 
-    <div id="map-wrapper" phx-update="ignore" class="pt-16">
-      <div id="map"
-        phx-hook="PhxHookGeoAssetMap">
+    <div class="flex pt-4">
+
+      <div class="grow">
+        <div id="map-wrapper" phx-update="ignore" class="grow h-380 drop-shadow-xl">
+          <div id="map"
+            phx-hook="PhxHookGeoAssetMap" class="rounded-lg">
+          </div>
+        </div>
+
+        <.live_component module={PolarWeb.ParkingDisplayComponent}
+          id="parking-display"
+          selected_item={@selected_item} />
       </div>
+
+      <div class="flex-none w-52 ml-4 justify-start ">
+        <.live_component module={PolarWeb.ParkingsComponent}
+        id="parking-list"
+        parkings={@parkings}
+        selected_item={@selected_item}/>
+      </div>
+
     </div>
+
     """
   end
 

@@ -7,7 +7,7 @@ defmodule PolarWeb.ParkingsComponent do
     ~H"""
     <div>
       <h3>Parkings</h3>
-      <div class="flex justify-around">
+      <div class="flex flex-col">
         <%= for parking <- @parkings do %>
           <div  id={"parking-#{parking.id}"}
                 phx-click="parking-was-selected"
@@ -29,7 +29,7 @@ defmodule PolarWeb.ParkingsComponent do
                     focus:ring
                     focus:ring-blue-300
                     border
-                    rounded-t-lg
+                    rounded-r-xl
                     cursor-pointer
                     p-3"
 
@@ -74,8 +74,8 @@ defmodule PolarWeb.ParkingsComponent do
     }
 
     ~H"""
-      <Heroicons.LiveView.icon name={@free_icon} type="outline" class={"float-left h-5 w-5 #{@free_color}"} />
-      <Heroicons.LiveView.icon name={@charger_icon} type="outline" class={"h-5 w-5 #{@charger_color}"} />
+      <Heroicons.LiveView.icon name={@free_icon} type="outline" class={"float-left h-5 w-5 mr-2 #{@free_color}"} />
+      <!--<Heroicons.LiveView.icon name={@charger_icon} type="outline" class={"h-5 w-5 #{@charger_color}"} />-->
     """
   end
 end
