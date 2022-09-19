@@ -1,7 +1,25 @@
 
 import GeoAssetMap from "./geo-asset-map"
+import flatpickr from "./flatpickr";
 
 let Hooks = {};
+
+Hooks.PhxHookDateTimePicker = {
+    mounted(){
+        console.log("Flatpickr mounted");
+        
+        // https://flatpickr.js.org/examples/
+        config = {
+            minDate: "today",
+            maxDate: new Date().fp_incr(14),
+            mode: "range",
+            defaultDate: "today",
+            inline: true
+        };
+
+        this.flatpicker = flatpickr(this.el, config);
+    }
+}
 
 // This is the client callback 
 // this.map refers to the html tag in phoenix where the map will be rendered

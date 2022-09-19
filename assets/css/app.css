@@ -7,5 +7,6 @@
 @import "./phoenix.css";
 @import "./live_view.css";
 @import "./leaflet";
+@import "./flatpickr.min";
 
 @import "tailwindcss/utilities";
