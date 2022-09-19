@@ -13,7 +13,9 @@ defmodule PolarWeb.ParkingDisplayComponent do
           </div>
 
           <div class="">
-            <%= live_redirect("Reserve now!", to: "/parkings", class: "button") %>
+            <%= live_redirect( "Reserve now!",
+                to: Routes.parking_reservation_index_path(@socket, :new),
+                class: "button") %>
           </div>
         </div>
       <% end %>
