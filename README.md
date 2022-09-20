@@ -9,8 +9,9 @@ However, many more services are on the wishing list to be implemented.
 
 The implementation requires
 - Tailwind CSS for the CSS style and forms.
-- leafet for rendering the map.
-- flatpickr for selecting the reservation dates.
+- Leafet.js for rendering the map.
+- Flatpickr.js for selecting the reservation dates.
+- Open source icons are taken from `icons8.com`
 - Other libraries will be added as required.
 
 To start your Phoenix server:
