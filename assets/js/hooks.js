@@ -1,6 +1,6 @@
 
 import GeoAssetMap from "./geo-asset-map"
-import flatpickr from "./flatpickr";
+import flatpickr from "../vendor/flatpickr";
 
 let Hooks = {};
 
