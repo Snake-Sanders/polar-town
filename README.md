@@ -1,4 +1,17 @@
-# Polar
+# Polar Town
+
+This is demo Phoenix application for handling services in a remote town.
+
+The first implementation is for booking parkings.
+However, many more services are on the wishing list to be implemented.
+
+![](./docs/img/main.png)
+
+The implementation requires
+- Tailwind CSS for the CSS style and forms.
+- leafet for rendering the map.
+- flatpickr for selecting the reservation dates.
+- Other libraries will be added as required.
 
 To start your Phoenix server:
 
