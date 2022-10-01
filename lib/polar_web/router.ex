@@ -75,23 +75,28 @@ defmodule PolarWeb.Router do
   scope "/", PolarWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    live "/parkings", ParkingLive.Index, :index
-    live "/parkings/new", ParkingLive.Index, :new
-    live "/parkings/:id/edit", ParkingLive.Index, :edit
+    live_session :admins, on_mount: PolarWeb.UserAuthLive do
+      live "/parkings", ParkingLive.Index, :index
+      live "/parkings/new", ParkingLive.Index, :new
+      live "/parkings/:id/edit", ParkingLive.Index, :edit
 
-    live "/parkings/:id", ParkingLive.Show, :show
-    live "/parkings/:id/show/edit", ParkingLive.Show, :edit
+      live "/parkings/:id", ParkingLive.Show, :show
+      live "/parkings/:id/show/edit", ParkingLive.Show, :edit
+    end
 
-    live "/parking_reservations", ParkingReservationLive.Index, :index
-    live "/parking_reservations/new", ParkingReservationLive.Index, :new
-    live "/parking_reservations/:id/edit", ParkingReservationLive.Index, :edit
+    live_session :default, on_mount: PolarWeb.UserAuthLive do
+      live "/parking_reservations", ParkingReservationLive.Index, :index
+      live "/parking_reservations/new", ParkingReservationLive.Index, :new
+      live "/parking_reservations/:id/edit", ParkingReservationLive.Index, :edit
 
-    live "/parking_reservations/:id", ParkingReservationLive.Show, :show
-    live "/parking_reservations/:id/show/edit", ParkingReservationLive.Show, :edit
+      live "/parking_reservations/:id", ParkingReservationLive.Show, :show
+      live "/parking_reservations/:id/show/edit", ParkingReservationLive.Show, :edit
 
-    get "/users/settings", UserSettingsController, :edit
-    put "/users/settings", UserSettingsController, :update
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+      get "/users/settings", UserSettingsController, :edit
+      put "/users/settings", UserSettingsController, :update
+      get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    end
+
   end
 
   scope "/", PolarWeb do

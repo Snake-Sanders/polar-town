@@ -40,6 +40,15 @@ defmodule PolarWeb.ParkingReservationLive.Index do
     {:noreply, assign(socket, :parking_reservations, list_parking_reservations())}
   end
 
+  # TODO: this event should be handled by the component
+  # handle_event("date-picked", %{"start" => "2022-09-20T22:00:00.000Z"}
+  def handle_event("date-picked", %{"start" => start_time}, socket) do
+
+    start_ndt = NaiveDateTime.from_iso8601!(start_time)
+    socket = update(socket, :time_start, fn _ -> start_ndt end)
+
+    {:noreply, socket}
+  end
   defp list_parking_reservations do
     Reservations.list_parking_reservations()
   end

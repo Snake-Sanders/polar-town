@@ -6,29 +6,34 @@
       <.form
         let={f}
         for={@changeset}
-        id="parking_reservation-form"
+        id="reservation-form"
         phx-target={@myself}
         phx-change="validate"
         phx-submit="save">
       
+        <!-- 
         <div class="border-x-2 border-red-400 gb-gray-300 p-2">
-          Reservations are available up to 14 days in advance.
+          Reservations are available up to 14 days in advance. 
         </div>
+          -->
 
         <div id="date-picker-wrapper" phx-update="ignore" class="flex flex-col items-center">
           <%= label f, :time_start, "Data and Time when the reservation starts" %>
-          <div id="flatpicker" phx-hook="PhxHookDateTimePicker">
+          <div id="datepicker" phx-hook="PhxHookDatePicker">
             <%= text_input f, :time_start, class: "w-64", placeholder: "Select Date" %>
           </div>
           <%= error_tag f, :time_start %>
         </div>
 
-        <%= #label f, :time_end %>
-        <%= #datetime_select f, :time_end %>
-        <%= #error_tag f, :time_end %>
+        <%= text_input f, :time_end, type: "hidden" %>
+        <%= text_input f, :parking_id, type: "hidden"#, value: @parking_id %>
+        <%= text_input f, :user_id, type: "hidden"#, value: @user_id %>
       
-        <div class="mt-8">
+        <div class="mt-8 space-x-4">
           <%= submit "Reserve", phx_disable_with: "Saving..." %>
+        </div>
+
+        <div class="mt-8">
         </div>
       </.form>
     </div>
