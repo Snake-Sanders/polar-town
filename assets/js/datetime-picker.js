@@ -11,6 +11,7 @@ class DateTimePicker{
             maxDate: new Date().fp_incr(14),
             mode: "range",
             defaultDate: "today",
+            conjuction: " - ",
             inline: true,
             onClose: (dateList, dateStr, instance) => {
                 this.update_input(dateList, dateStr, instance);
@@ -25,8 +26,26 @@ class DateTimePicker{
         let dateStart = instance.parseDate(dateList[0], "Y-m-d h:i K")
         
         console.log("FlatPickr closed:" + dateStart);
-        const input = document.querySelector("#reservation-form_time_start");
-        input.value = dateStr;
+        let input_start = document.querySelector("#reservation-form_time_start");
+        let input_end = document.querySelector("#reservation-form_time_end");
+        
+        switch(dateList.length)
+        {
+            case 1: 
+            {
+                input_start.value = dateList[0];
+                input_end.value = dateList[0];
+                break;
+            }
+            case 2: 
+            {
+                input_start.value = dateList[0];
+                input_end.value = dateList[1];
+                break;
+            }
+        }
+        // TODO: use alt text to show the range dates in the start date field
+        // input_start = dateStr;
         // this.pushEvent("date-updated");
         
     }
