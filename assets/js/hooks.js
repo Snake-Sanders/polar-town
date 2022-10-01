@@ -1,23 +1,19 @@
 
 import GeoAssetMap from "./geo-asset-map"
-import flatpickr from "../vendor/flatpickr";
+import DateTimePicker from "./datetime-picker"
 
 let Hooks = {};
 
-Hooks.PhxHookDateTimePicker = {
+Hooks.PhxHookDatePicker = {
     mounted(){
         console.log("Flatpickr mounted");
-        
-        // https://flatpickr.js.org/examples/
-        config = {
-            minDate: "today",
-            maxDate: new Date().fp_incr(14),
-            mode: "range",
-            defaultDate: "today",
-            inline: true
-        };
-
-        this.flatpicker = flatpickr(this.el, config);
+    
+        this.datepicker = new DateTimePicker(this.el);
+    },
+    
+    destroyed() {
+        console.log("Destroyed", this)
+        // this.datepicker.destroy()
     }
 }
 
